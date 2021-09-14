@@ -46,3 +46,5 @@ try {
   console.log('Error, something bad happend, message: ', e.message);
 }
 
+export default calculateBmi
+
