@@ -84,6 +84,6 @@ const diagnoses = [
   }
 ];
 
-const diagnosesData:Array<Diagnose> = diagnoses as Array<Diagnose>;
+const diagnosesData: Diagnose[] = diagnoses as Diagnose[];
 
 export default diagnosesData;

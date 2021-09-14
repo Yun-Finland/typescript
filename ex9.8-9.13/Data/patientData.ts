@@ -1,3 +1,5 @@
+import { Patient } from "../src/types";
+
 const patients = [
   {
       "id": "d2773336-f723-11e9-8f0b-362b9e155667",
@@ -40,3 +42,7 @@ const patients = [
       "occupation": "Digital evangelist"
   }
 ];
+
+const patientsData : Patient[] = patients as Patient[];
+
+export default patientsData;
