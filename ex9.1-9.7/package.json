@@ -1,0 +1,18 @@
+{
+  "name": "ex9.1-9.7",
+  "version": "1.0.0",
+  "description": "ex9.1-9.7",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-node": "ts-node",
+    "calculateBmi":"ts-node bmiCalculator.ts"
+  },
+  "author": "Yun Xiao",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16.9.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}
