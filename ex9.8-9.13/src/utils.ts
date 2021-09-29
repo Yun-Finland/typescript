@@ -51,7 +51,7 @@ export const parseOccupation = (occupation:unknown):string => {
   return occupation;
 };
 
-type Fields = {name:unknown, dateOfBirth: unknown, ssn:unknown, gender:unknown, occupation: unknown};
+type Fields = {name:unknown, dateOfBirth: unknown, ssn:unknown, gender:unknown, occupation: unknown };
 
 export const toNewPatient = ({ name, dateOfBirth, ssn, gender, occupation } :Fields) : NoIdPatient =>{
   const newPatient:NoIdPatient = {
@@ -59,7 +59,8 @@ export const toNewPatient = ({ name, dateOfBirth, ssn, gender, occupation } :Fie
     dateOfBirth: parseDate(dateOfBirth),
     ssn: parseSsn(ssn),
     gender: parseGender(gender),
-    occupation: parseOccupation(occupation)
+    occupation: parseOccupation(occupation),
+    entries:[],
   };
 
   return newPatient;
