@@ -6,7 +6,7 @@ export type Action =
       type: "SET_PATIENT_LIST";
       payload: Patient[];
     }
-  | {
+  | { 
       type: "ADD_PATIENT";
       payload: Patient;
     };
