@@ -4,7 +4,7 @@ import { Container,Header, Icon } from "semantic-ui-react";
 import {  useParams } from "react-router-dom";
 import { apiBaseUrl } from "../constants";
 import { Patient, Gender } from "../types";
-import { useStateValue } from "../state";
+import { useStateValue, addPatient } from "../state";
 
 const GenderIcon = ({gender} :{gender: Gender}) =>{
   switch(gender){
@@ -32,7 +32,7 @@ const PatientInfoPage = () => {
       try{
         const response = await axios.get<Patient>(`${apiBaseUrl}/patients/${id}`); 
         returnedPatient.ssn = response.data.ssn;
-        dispatch({type: "ADD_PATIENT", payload: returnedPatient});
+        dispatch(addPatient(returnedPatient));
       
       }catch(e){
         if(e instanceof Error){
