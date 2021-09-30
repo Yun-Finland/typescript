@@ -48,6 +48,17 @@ const PatientInfoPage = () => {
       <Header as='h2'> {returnedPatient.name} <GenderIcon gender={returnedPatient.gender} /></Header>
       <p>ssn: {returnedPatient.ssn}</p>
       <p>occupation: {returnedPatient.occupation}</p>
+      <Header as="h3">entries</Header>
+      {returnedPatient.entries.map(entry => {
+        return(
+          <div key={entry.id}>
+            {entry.date} <em>{entry.description}</em>
+            <div>
+              {entry.diagnosisCodes?.map(code => <li key={code}>{code}</li>)}
+            </div>
+          </div>
+        );
+      })}
     </Container>
   );
 };
