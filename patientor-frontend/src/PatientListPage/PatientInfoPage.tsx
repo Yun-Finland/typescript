@@ -1,10 +1,16 @@
 import React from "react";
 import axios from "axios";
-import { Container,Header, Icon } from "semantic-ui-react";
+import { Container,Header, Icon, Message } from "semantic-ui-react";
 import {  useParams } from "react-router-dom";
 import { apiBaseUrl } from "../constants";
-import { Patient, Gender, Entry } from "../types";
+import { Patient, Gender, Entry, HealthCheckRating } from "../types";
 import { useStateValue, addPatient } from "../state";
+
+const assertNever = (value: never): never => {
+  throw new Error(
+    `Unhandled discriminated union member: ${JSON.stringify(value)}`
+  );
+};
 
 const GenderIcon = ({gender} :{gender: Gender}) =>{
   switch(gender){
@@ -17,15 +23,60 @@ const GenderIcon = ({gender} :{gender: Gender}) =>{
   }
 };
 
+const RatingIcon = ({rate}:{rate:HealthCheckRating})=>{
+  switch(rate){
+    case 0:
+      return <Icon name="heart" color="green"/>;
+    case 1:
+      return <Icon name="heart" color="orange"/>;
+    case 2: 
+      return <Icon name="heart" color="pink"/>;
+    default:
+      return <Icon name="heart" color="red"/>;
+  }
+};
+
+const EntryIcon = ({entry}:{entry:Entry}) => {
+  switch(entry.type){
+    case "HealthCheck":
+      return (
+        <div>
+          <Header as="h3">{entry.date} <Icon name="user md"/></Header>
+          <p><em>{entry.description}</em></p>
+          <RatingIcon rate={entry.healthCheckRating}/>
+        </div>
+      );
+    case "Hospital":
+      return (
+        <div>
+          <Header as="h3">{entry.date} <Icon name="hospital"/></Header>
+          <p><em>{entry.description}</em></p>
+        </div>
+      );
+    case "OccupationalHealthcare":
+      return (
+        <div>
+          <Header as="h3">{entry.date} <Icon name="stethoscope"/> {entry.employerName}</Header>
+          <p><em>{entry.description}</em></p>
+        </div>
+      );
+    default:
+      return assertNever(entry);
+  }
+};
+
 const EntryComp = ({entry}:{entry:Entry}) => {
   const [{ diagnoses }, ] = useStateValue();
+  
   return(
-    <div key={entry.id}>
-      {entry.date} <em>{entry.description}</em>
-      <div>
-        {entry.diagnosisCodes?.map(code => <li key={code}>{code} {diagnoses[code]["name"]}</li>)}
+    <Message>
+      <div key={entry.id}>
+        <EntryIcon entry={entry} />
+        <div>
+          {entry.diagnosisCodes?.map(code => <li key={code}>{code} {diagnoses[code]["name"]}</li>)}
+        </div>
       </div>
-    </div>
+    </Message>
   );
 };
 
