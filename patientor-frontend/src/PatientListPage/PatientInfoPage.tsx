@@ -3,7 +3,7 @@ import axios from "axios";
 import { Container,Header, Icon } from "semantic-ui-react";
 import {  useParams } from "react-router-dom";
 import { apiBaseUrl } from "../constants";
-import { Patient, Gender } from "../types";
+import { Patient, Gender, Entry } from "../types";
 import { useStateValue, addPatient } from "../state";
 
 const GenderIcon = ({gender} :{gender: Gender}) =>{
@@ -15,6 +15,18 @@ const GenderIcon = ({gender} :{gender: Gender}) =>{
     default:
       return <Icon name="genderless"/>;
   }
+};
+
+const EntryComp = ({entry}:{entry:Entry}) => {
+  const [{ diagnoses }, ] = useStateValue();
+  return(
+    <div key={entry.id}>
+      {entry.date} <em>{entry.description}</em>
+      <div>
+        {entry.diagnosisCodes?.map(code => <li key={code}>{code} {diagnoses[code]["name"]}</li>)}
+      </div>
+    </div>
+  );
 };
 
 const PatientInfoPage = () => {
@@ -49,16 +61,7 @@ const PatientInfoPage = () => {
       <p>ssn: {returnedPatient.ssn}</p>
       <p>occupation: {returnedPatient.occupation}</p>
       <Header as="h3">entries</Header>
-      {returnedPatient.entries.map(entry => {
-        return(
-          <div key={entry.id}>
-            {entry.date} <em>{entry.description}</em>
-            <div>
-              {entry.diagnosisCodes?.map(code => <li key={code}>{code}</li>)}
-            </div>
-          </div>
-        );
-      })}
+      {returnedPatient.entries.map(entry => <EntryComp key={entry.id} entry={entry} />)}    
     </Container>
   );
 };

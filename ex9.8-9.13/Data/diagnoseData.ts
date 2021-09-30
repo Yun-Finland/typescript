@@ -1,6 +1,6 @@
 import { Diagnose } from "../src/types";
 
-const diagnoses = [
+const diagnosesData: Diagnose[] = [
   {
     "code": "M24.2",
     "name": "Disorder of ligament",
@@ -83,7 +83,5 @@ const diagnoses = [
     "name": "Pneumonia due to coronavirus disease"
   }
 ];
-
-const diagnosesData: Diagnose[] = diagnoses as Diagnose[];
 
 export default diagnosesData;
