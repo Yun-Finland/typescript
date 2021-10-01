@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import patientsData from "../../Data/patientData";
-import { Patient, NoIdPatient, NoSsnPatient } from "../types";
+import { Patient, NoIdPatient, NoSsnPatient, EntryWithoutId, Entry } from "../types";
 import { v4 as uuid } from 'uuid';
 
 const patients:Array<Patient> = patientsData;
@@ -25,7 +24,6 @@ const getPatients = () : NoSsnPatient[] => {
 const addNewPatient = (entry: NoIdPatient) : Patient => {
 
   const newPatientEntry : Patient = {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     id: uuid(),
     ...entry
   };
@@ -34,9 +32,27 @@ const addNewPatient = (entry: NoIdPatient) : Patient => {
   return newPatientEntry;
 };
 
+const addNewEntry = (patient:Patient, entry:EntryWithoutId) : Entry => {
+
+  const newEntry: Entry = {
+    id: uuid(),
+    ...entry
+  } ;
+
+  patient.entries.push(newEntry);
+
+  return newEntry;
+};
+
 const findPatientById = (id : string): Patient | undefined=> {
   const returnedPatient = patients.find(n=>n.id === id);
   return returnedPatient;
 };
 
-export default {getAllPatients, getPatients, addNewPatient,findPatientById};
+export default {
+  getAllPatients, 
+  getPatients, 
+  addNewPatient,
+  findPatientById,
+  addNewEntry
+};

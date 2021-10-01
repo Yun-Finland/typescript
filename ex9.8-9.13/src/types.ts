@@ -17,7 +17,7 @@ export enum HealthCheckRating {
   "CriticalRisk" = 3
 }
 
-interface BaseEntry {
+export interface BaseEntry {
   id: string;
   description: string;
   date: string;
@@ -48,6 +48,8 @@ export interface OccupationalHealthCareEntry  extends BaseEntry {
 }
 
 export type Entry = OccupationalHealthCareEntry | HospitalEntry | HealthCheckEntry;
+
+export type EntryWithoutId = Omit<OccupationalHealthCareEntry,'id'> | Omit<HospitalEntry,'id'> | Omit<HealthCheckEntry,'id'>; 
 
 export interface Patient {
   id: string;

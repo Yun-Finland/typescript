@@ -36,7 +36,7 @@ const RatingIcon = ({rate}:{rate:HealthCheckRating})=>{
   }
 };
 
-const EntryIcon = ({entry}:{entry:Entry}) => {
+const EntryDetail = ({entry}:{entry:Entry}) => {
   switch(entry.type){
     case "HealthCheck":
       return (
@@ -65,13 +65,13 @@ const EntryIcon = ({entry}:{entry:Entry}) => {
   }
 };
 
-const EntryComp = ({entry}:{entry:Entry}) => {
+const EntriesDetail = ({entry}:{entry:Entry}) => {
   const [{ diagnoses }, ] = useStateValue();
   
   return(
     <Message>
       <div key={entry.id}>
-        <EntryIcon entry={entry} />
+        <EntryDetail entry={entry} />
         <div>
           {entry.diagnosisCodes?.map(code => <li key={code}>{code} {diagnoses[code]["name"]}</li>)}
         </div>
@@ -112,7 +112,7 @@ const PatientInfoPage = () => {
       <p>ssn: {returnedPatient.ssn}</p>
       <p>occupation: {returnedPatient.occupation}</p>
       <Header as="h3">entries</Header>
-      {returnedPatient.entries.map(entry => <EntryComp key={entry.id} entry={entry} />)}    
+      {returnedPatient.entries.map(entry => <EntriesDetail key={entry.id} entry={entry} />)}    
     </Container>
   );
 };
