@@ -1,7 +1,7 @@
 import React from "react";
 import { ErrorMessage, Field, FieldProps, FormikProps } from "formik";
 import { Dropdown, DropdownProps, Form } from "semantic-ui-react";
-import { Diagnosis, Gender } from "../types";
+import { Diagnosis, EntryType, Gender } from "../types";
 
 // structure of a single option
 export type GenderOption = {
@@ -24,6 +24,38 @@ export const SelectField = ({
   <Form.Field>
     <label>{label}</label>
     <Field as="select" name={name} className="ui dropdown">
+      {options.map(option => (
+        <option key={option.value} value={option.value}>
+          {option.label || option.value}
+        </option>
+      ))}
+    </Field>
+  </Form.Field>
+);
+
+export type TypeOption = {
+  value: EntryType;
+  label: string;
+};
+
+type SelectTypeFieldProps = {
+  name: string;
+  label: string;
+  options: TypeOption[];
+  entryType: EntryType;
+  setEntryType: (entryType: EntryType) => void;
+};
+
+export const SelectTypeField = ({
+  name,
+  label,
+  options,
+  entryType,
+  setEntryType,
+}: SelectTypeFieldProps) => (
+  <Form.Field>
+    <label>{label}</label>
+    <Field as="select" name={name} className="ui dropdown" value={entryType} onChange={(e: { target: { value: EntryType; }; })=>setEntryType(e.target.value)}>
       {options.map(option => (
         <option key={option.value} value={option.value}>
           {option.label || option.value}
@@ -62,16 +94,19 @@ interface NumberProps extends FieldProps {
   max: number;
 }
 
-export const NumberField = ({ field, label, min, max } : NumberProps ) => (
-  <Form.Field>
-    <label>{label}</label>
-    <Field {...field} type='number' min={min} max={max} />
+export const NumberField = ({ field, label, min, max } : NumberProps ) => {
 
-    <div style={{ color:'red' }}>
-      <ErrorMessage name={field.name} />
-    </div>
-  </Form.Field>
-);
+  return(
+    <Form.Field>
+      <label>{label}</label>
+      <Field {...field} type='number' min={min} max={max} value={0}/>
+
+      <div style={{ color:'red' }}>
+        <ErrorMessage name={field.name} />
+      </div>
+    </Form.Field>
+  );
+};
 
 export const DiagnosisSelection = ({
   diagnoses,
